@@ -1,0 +1,276 @@
+<!-- search.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ... head metadata ... -->
+    <title>MovieHive | Ad Free Movies, TV Shows, More</title>
+    <link rel="icon" href="images/32.png" type="image/x-icon">
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="MovieHive | Ad Free Movies" />
+    <meta name="description" content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.moviehive.lol/" />
+    <meta property="og:title" content="MovieHive | Ad Free Movies" />
+    <meta property="og:description" content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+    <meta property="og:image" content="https://i.imgur.com/WWKVaTT.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.moviehive.lol/" />
+    <meta property="twitter:title" content="MovieHive | Ad Free Movies" />
+    <meta property="twitter:description"
+        content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+    <meta property="twitter:image" content="https://i.imgur.com/WWKVaTT.png" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            margin-top: 0;
+            padding-top: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            height: 40px;
+            background-color: #131312;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10rem;
+
+        }
+
+        .search-box {
+            width: 700px;
+            height: 22px;
+            padding: 5px 10px;
+            /* to make space for the magnifying glass icon */
+            outline: none;
+            /* rounding the borders more */
+            border: 1px solid #000000;
+            background-color: #000000;
+            background-position: 7px center;
+            color: white;
+
+            /* position of the magnifying glass icon */
+            background-repeat: no-repeat;
+            background-size: 16px;
+            /* size of the magnifying glass icon */
+        }
+
+
+        .login-btn,
+        .playButton,
+        .searchButton,
+        .register-btn {
+            background-color: #20201f;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            /* Added a margin to separate the two buttons */
+        }
+
+        .login-btn:hover,
+        .register-btn:hover {
+            background-color: #0a0a0a;
+        }
+
+        .user-icon {
+            margin-right: 8px;
+        }
+
+
+
+
+
+        .mobile-menu-icon {
+            display: none;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+            .search-box,
+            .login-btn {
+                display: none;
+            }
+
+            .mobile-menu-icon {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #131312;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+            }
+
+            .banner {
+                width: 200px;
+            }
+
+            #trending-movie-banner::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 50%;
+                /* Determines how much of the bottom part you want to fade */
+                background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+                pointer-events: none;
+                /* Ensures the gradient overlay doesn't interfere with any potential interactions with the banner */
+            }
+
+        }
+
+        #results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .movie-details {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px 10px;
+            font-size: 12px;
+            color: white;
+        }
+
+
+        .movie {
+            margin: 10px;
+            width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            background-color: #131312;
+            cursor: pointer;
+        }
+
+        .movie img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .movie-title {
+            padding: 10px;
+            font-size: 14px;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/"><img style="height: 54px; width: 100px;" src="images/movies.png"></a>
+        </div>
+        <input type="text" id="search-input" style="color: white;" class="search-box" placeholder="Enter Movies...">
+        <button class="searchButton" onclick="searchMovies()">Search</button>
+
+
+
+        <div class="mobile-menu-icon">
+            <span>&#9776;</span>
+        </div>
+        <div class="mobile-menu">
+            <!-- Add mobile menu items here -->
+        </div>
+    </nav>
+    <div id="search-query" style="color: white; margin-left: 2rem;"></div>
+    <div id="results"></div>
+
+    <script>
+
+
+        function searchMovies() {
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('q'); // Assume 'q' is the parameter for the search query
+        const TMDB_API_KEY = 'c9cbc16ed2cc92ee656d643c52f8c6a1';
+
+        const searchQueryDiv = document.getElementById('search-query');
+        searchQueryDiv.innerHTML = `<h2>Search Results for: "${query}"</h2>`;
+
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                const movies = data.results;
+                const resultsDiv = document.getElementById('results');
+
+                movies.forEach(movie => {
+                    // Check if movie has a poster
+                    if (movie.poster_path) {
+                        const movieDiv = document.createElement('div');
+                        movieDiv.className = 'movie';
+
+                        const posterImg = document.createElement('img');
+                        posterImg.src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+                        posterImg.alt = movie.title;
+                        posterImg.addEventListener('click', () => {
+                            window.location.href = `/movie.html?id=${movie.id}`;
+                        });
+
+                        const titleDiv = document.createElement('div');
+                        titleDiv.className = 'movie-title';
+                        titleDiv.innerText = movie.title;
+
+                        // Adding movie details (rating and release year)
+                        const movieDetailsDiv = document.createElement('div');
+                        movieDetailsDiv.className = 'movie-details';
+
+                        // Displaying the TMDb rating
+                        const ratingDiv = document.createElement('div');
+                        ratingDiv.innerText = `Rating: ${movie.vote_average}/10`;
+                        movieDetailsDiv.appendChild(ratingDiv);
+
+                        // Displaying the release year
+                        const yearDiv = document.createElement('div');
+                        yearDiv.innerText = movie.release_date ? movie.release_date.split('-')[0] : 'Unknown';
+                        movieDetailsDiv.appendChild(yearDiv);
+
+                        movieDiv.appendChild(posterImg);
+                        movieDiv.appendChild(titleDiv);
+                        movieDiv.appendChild(movieDetailsDiv);  // Add this after the title
+
+                        resultsDiv.appendChild(movieDiv);
+                    }
+                });
+            });
+
+
+    </script>
+</body>
+
+</html>

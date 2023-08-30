@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHive | Ad Free Movies, TV Shows, More</title>
+    <link rel="icon" href="images/32.png" type="image/x-icon">
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="MovieHive | Ad Free Movies" />
+    <meta name="description" content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.moviehive.lol/" />
+    <meta property="og:title" content="MovieHive | Ad Free Movies" />
+    <meta property="og:description" content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+    <meta property="og:image" content="https://i.imgur.com/WWKVaTT.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.moviehive.lol/" />
+    <meta property="twitter:title" content="MovieHive | Ad Free Movies" />
+    <meta property="twitter:description"
+        content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+    <meta property="twitter:image" content="https://i.imgur.com/WWKVaTT.png" />
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            margin-top: 0;
+            padding-top: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .tv-show-card {
+            margin: 10px;
+            width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            background-color: #131312;
+        }
+
+        .tv-show-card img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .tv-show-title {
+            padding: 10px;
+            font-size: 14px;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-decoration: none;
+        }
+
+        .tv-show-details {
+            padding: 10px;
+            font-size: 16px;
+            color: #ccc;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #tvInfo {
+            /* ... other styles ... */
+            position: relative;
+            z-index: 1;
+        }
+
+        #videoPlayer {
+            /* ... other styles ... */
+            position: relative;
+            z-index: 2;
+        }
+
+        #tvshow-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+
+        .tvInfo {
+            color: white;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            /* Full height */
+            backdrop-filter: blur(15px);
+            /* Blurry background effect */
+        }
+
+        .contentWrapper {
+            display: flex;
+            align-items: center;
+
+        }
+
+        .tvPoster {
+            width: 150px;
+        }
+
+        .tvDetails {
+            padding-left: 2rem;
+
+        }
+
+        .tvDescription {
+            max-width: 500px;
+
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            height: 40px;
+            background-color: #131312;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10rem;
+
+        }
+
+        .search-box {
+            width: 700px;
+            height: 22px;
+            padding: 5px 10px;
+            /* to make space for the magnifying glass icon */
+            outline: none;
+            /* rounding the borders more */
+            border: 1px solid #000000;
+            background-color: #000000;
+            background-position: 7px center;
+            color: white;
+
+            /* position of the magnifying glass icon */
+            background-repeat: no-repeat;
+            background-size: 16px;
+            /* size of the magnifying glass icon */
+        }
+
+
+        .login-btn,
+        .playButton,
+        .searchButton,
+        .register-btn {
+            background-color: #20201f;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            /* Added a margin to separate the two buttons */
+        }
+
+        .login-btn:hover,
+        .register-btn:hover {
+            background-color: #0a0a0a;
+        }
+
+        .user-icon {
+            margin-right: 8px;
+        }
+
+
+
+
+
+        .mobile-menu-icon {
+            display: none;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+            .search-box,
+            .login-btn {
+                display: none;
+            }
+
+            .mobile-menu-icon {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #131312;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+            }
+
+            .banner {
+                width: 200px;
+            }
+
+            #trending-movie-banner::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 50%;
+                /* Determines how much of the bottom part you want to fade */
+                background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+                pointer-events: none;
+                /* Ensures the gradient overlay doesn't interfere with any potential interactions with the banner */
+            }
+        }
+
+        .similar-movies-section {
+            padding: 20px;
+        }
+
+        .similar-movie-item {
+            display: inline-block;
+            width: 150px;
+            margin: 10px;
+        }
+
+        .similar-movie-item img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ... Your Navigation Bar ... -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/"><img style="height: 54px; width: 100px;" src="images/movies.png"></a>
+        </div>
+        <input type="text" id="search-input" style="color: white;" class="search-box" placeholder="Enter Movies...">
+        <button class="searchButton" onclick="searchMovies()">Search</button>
+
+        <div class="mobile-menu-icon">
+            <span>&#9776;</span>
+        </div>
+        <div class="mobile-menu">
+            <!-- Add mobile menu items here -->
+        </div>
+    </nav>
+
+    <div id="videoPlayer">
+        <iframe id="tvshow-iframe" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="tvInfo"
+        style="background-size: cover; background-position: center; height: 500px; margin: 0px 0; position: relative;">
+
+        <!-- Fade effect at the top -->
+        <div class="fadeEffect"
+            style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0)); pointer-events: none;">
+        </div>
+        >
+        <div class="contentWrapper">
+            <img src="" alt="TV Show Poster" class="tvPoster" id="tvShowPoster">
+            <div class="tvDetails">
+                <h1 id="tvShowTitle"></h1>
+                <p id="imdbRating"></p>
+                <p class="tvDescription" id="tvShowDescription"></p>
+                <h3><strong>Genre:</strong> <span id="tvShowGenre"></span></h3>
+                <p><strong>Duration:</strong> <span id="tvShowDuration"></span></p>
+                <p><strong>Country:</strong> <span id="tvShowCountry"></span></p>
+                <div id="seasons-episodes-selector">
+                    <select
+                        style="background-color: rgb(24, 24, 24); text-decoration: none; border: none; color: white; padding: 15px 15px; border-radius: 30px;"
+                        id="seasonSelector" onchange="loadSeason()">
+                    </select>
+
+                    <select
+                        style="background-color: rgb(24, 24, 24); text-decoration: none; border: none; color: white; padding: 15px 15px; border-radius: 30px;"
+                        id="episodeSelector" onchange="loadEpisode()">
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <section id="similar-shows-section">
+        <!-- ... Your Similar Shows Section ... -->
+    </section>
+
+    <script>
+
+        function searchMovies() {
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        const TMDB_API_KEY = 'c9cbc16ed2cc92ee656d643c52f8c6a1';
+
+        let currentTVShowId = '';
+        let currentSeasonNumber = '';
+        let currentEpisodeNumber = '';
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentTVShowId = urlParams.get('id');
+
+            // Fetch the initial TV Show data here
+            fetchTVShowData(currentTVShowId);
+        }
+
+        function fetchTVShowData(tvShowId) {
+            const tmdbApiKey = TMDB_API_KEY;
+            const tmdbUrl = `https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${tmdbApiKey}&append_to_response=credits`;
+
+            fetch(tmdbUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const bannerUrl = `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`;
+                    document.querySelector('.tvInfo').style.backgroundImage = `url(${bannerUrl})`;
+
+                    document.getElementById('tvShowTitle').textContent = data.name;
+                    document.getElementById('imdbRating').textContent = 'IMDb Rating: ' + data.vote_average;
+                    document.getElementById('tvShowDescription').textContent = data.overview;
+                    document.getElementById('tvShowGenre').textContent = data.genres.map(genre => genre.name).join(', ');
+                    document.getElementById('tvShowDuration').textContent = data.episode_run_time[0] + ' min';
+                    document.getElementById('tvShowCountry').textContent = data.production_countries.map(country => country.name).join(', ');
+                    document.getElementById('tvShowPoster').src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+
+                    // Load seasons
+                    const seasonSelector = document.getElementById('seasonSelector');
+                    seasonSelector.innerHTML = '';
+                    data.seasons.forEach(season => {
+                        const option = document.createElement('option');
+                        option.value = season.season_number;
+                        option.textContent = `Season ${season.season_number}`;
+                        seasonSelector.appendChild(option);
+                    });
+
+                    // Initially, load the first season
+                    loadSeason(1);
+                })
+                .catch(err => {
+                    console.error("Error fetching TV Show details:", err);
+                });
+        }
+
+        function loadSeason(seasonNumber = null) {
+            if (seasonNumber === null) {
+                const seasonSelector = document.getElementById('seasonSelector');
+                currentSeasonNumber = seasonSelector.value;
+            } else {
+                currentSeasonNumber = seasonNumber;
+            }
+
+            const iframeUrl = `https://vidsrc.to/embed/tv/${currentTVShowId}/${currentSeasonNumber}`;
+            document.getElementById('tvshow-iframe').src = iframeUrl;
+
+            // Fetch episodes for the selected season
+            fetchEpisodes(currentSeasonNumber);
+        }
+
+        function fetchEpisodes(seasonNumber) {
+            const tmdbApiKey = TMDB_API_KEY;
+            const episodesUrl = `https://api.themoviedb.org/3/tv/${currentTVShowId}/season/${seasonNumber}?api_key=${tmdbApiKey}`;
+
+            fetch(episodesUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const episodeSelector = document.getElementById('episodeSelector');
+                    episodeSelector.innerHTML = '';
+                    data.episodes.forEach(episode => {
+                        const option = document.createElement('option');
+                        option.value = episode.episode_number;
+                        option.textContent = `Episode ${episode.episode_number}: ${episode.name}`;
+                        episodeSelector.appendChild(option);
+                    });
+
+                    // Initially, load the first episode
+                    loadEpisode(1);
+                })
+                .catch(err => {
+                    console.error("Error fetching episodes:", err);
+                });
+        }
+
+        function loadEpisode(episodeNumber = null) {
+            if (episodeNumber === null) {
+                const episodeSelector = document.getElementById('episodeSelector');
+                currentEpisodeNumber = episodeSelector.value;
+            } else {
+                currentEpisodeNumber = episodeNumber;
+            }
+
+            const iframeUrl = `https://vidsrc.to/embed/tv/${currentTVShowId}/${currentSeasonNumber}/${currentEpisodeNumber}`;
+            document.getElementById('tvshow-iframe').src = iframeUrl;
+        }
+
+        function displayTVShowData(data) {
+            document.getElementById('tvShowTitle').textContent = data.name;
+            document.getElementById('imdbRating').textContent = 'IMDb Rating: ' + data.vote_average;
+            document.getElementById('tvShowDescription').textContent = data.overview;
+            document.getElementById('tvShowGenre').textContent = data.genres.map(genre => genre.name).join(', ');
+            document.getElementById('tvShowDuration').textContent = data.episode_run_time[0] + ' min';
+            document.getElementById('tvShowCountry').textContent = data.production_countries.map(country => country.name).join(', ');
+            document.getElementById('tvShowPoster').src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+        }
+    </script>
+
+</body>
+
+</html>

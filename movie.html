@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHive | Ad Free Movies, TV Shows, More</title>
+    <link rel="icon" href="images/32.png" type="image/x-icon">
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="MovieHive | Ad Free Movies" />
+    <meta name="description" content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.moviehive.lol/" />
+    <meta property="og:title" content="MovieHive | Ad Free Movies" />
+    <meta property="og:description" content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+    <meta property="og:image" content="https://i.imgur.com/WWKVaTT.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.moviehive.lol/" />
+    <meta property="twitter:title" content="MovieHive | Ad Free Movies" />
+    <meta property="twitter:description"
+        content="Enjoy endless free movies at the tip of your finger with MovieHive." />
+    <meta property="twitter:image" content="https://i.imgur.com/WWKVaTT.png" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            margin-top: 0;
+            padding-top: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .tv-show-card {
+            margin: 10px;
+            width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            background-color: #131312;
+        }
+
+        .tv-show-card img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .tv-show-title {
+            padding: 10px;
+            font-size: 14px;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-decoration: none;
+        }
+
+        .tv-show-details {
+            padding: 10px;
+            font-size: 16px;
+            color: #ccc;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        #movie-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+
+        .movieInfo {
+            color: white;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            /* Full height */
+            backdrop-filter: blur(15px);
+            /* Blurry background effect */
+        }
+
+        .contentWrapper {
+            display: flex;
+            align-items: center;
+
+        }
+
+        .moviePoster {
+            width: 150px;
+        }
+
+        .movieDetails {
+            padding-left: 2rem;
+
+        }
+
+        .movieDescription {
+            max-width: 500px;
+
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            height: 40px;
+            background-color: #131312;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10rem;
+
+        }
+
+        .search-box {
+            width: 700px;
+            height: 22px;
+            padding: 5px 10px;
+            /* to make space for the magnifying glass icon */
+            outline: none;
+            /* rounding the borders more */
+            border: 1px solid #000000;
+            background-color: #000000;
+            background-position: 7px center;
+            color: white;
+
+            /* position of the magnifying glass icon */
+            background-repeat: no-repeat;
+            background-size: 16px;
+            /* size of the magnifying glass icon */
+        }
+
+
+        .login-btn,
+        .playButton,
+        .searchButton,
+        .register-btn {
+            background-color: #20201f;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            /* Added a margin to separate the two buttons */
+        }
+
+        .login-btn:hover,
+        .register-btn:hover {
+            background-color: #0a0a0a;
+        }
+
+        .user-icon {
+            margin-right: 8px;
+        }
+
+
+
+
+
+        .mobile-menu-icon {
+            display: none;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+            .search-box,
+            .login-btn {
+                display: none;
+            }
+
+            .mobile-menu-icon {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #131312;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+            }
+
+            .banner {
+                width: 200px;
+            }
+
+            #trending-movie-banner::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 50%;
+                /* Determines how much of the bottom part you want to fade */
+                background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+                pointer-events: none;
+                /* Ensures the gradient overlay doesn't interfere with any potential interactions with the banner */
+            }
+        }
+
+        .similar-movies-section {
+            padding: 20px;
+        }
+
+        .similar-movie-item {
+            display: inline-block;
+            width: 150px;
+            margin: 10px;
+        }
+
+        .similar-movie-item img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/"><img style="height: 54px; width: 100px;" src="images/movies.png"></a>
+        </div>
+        <input type="text" id="search-input" style="color: white;" class="search-box" placeholder="Enter Movies...">
+        <button class="searchButton" onclick="searchMovies()">Search</button>
+
+        <div class="mobile-menu-icon">
+            <span>&#9776;</span>
+        </div>
+        <div class="mobile-menu">
+            <!-- Add mobile menu items here -->
+        </div>
+    </nav>
+
+    <iframe id="movie-iframe"></iframe>
+
+    <div class="movieInfo"
+        style="background-size: cover; background-position: center; height: 500px; margin: 0px 0; position: relative;">
+
+        <!-- Fade effect at the top -->
+        <div class="fadeEffect"
+            style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0)); pointer-events: none;">
+        </div>
+        >
+        <div style="display: flex; backdrop-filter: blur(15px);">
+            <img style="width: 200px;" src="" alt="Movie Poster" class="moviePoster" id="moviePoster">
+            <div class="movieDetails">
+                <h1 id="movieTitle"></h1>
+                <p id="imdb-rating"></p>
+                <p style="max-width: 500px" id="movieDescription"></p>
+                <h3><strong>Genre:</strong> <span id="movieGenre"></span></h3>
+                <p><strong>Duration:</strong> <span id="movieDuration"></span></p>
+                <p><strong>Country:</strong> <span id="movieCountry"></span></p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <section id="trending-section" style="margin-top: 20px;">
+
+        <h2 style="text-align: left; margin-top: 10vh; margin-left: 5vh;font-size: 32px; color: white;">You May Also
+            Like</h2>
+        <div id="trending-movies-container" class="movies-container"
+            style="display: flex; flex-wrap: wrap; justify-content: space-around;"></div>
+    </section>
+
+
+    <script>
+
+        function searchMovies() {
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+        const TMDB_API_KEY = 'c9cbc16ed2cc92ee656d643c52f8c6a1';
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = urlParams.get('id');
+
+            const tmdbApiKey = 'c9cbc16ed2cc92ee656d643c52f8c6a1';
+            const tmdbUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${tmdbApiKey}&append_to_response=credits`;
+
+            fetch(tmdbUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Background banner
+                    const bannerUrl = `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`;
+                    document.querySelector('.movieInfo').style.backgroundImage = `url(${bannerUrl})`;
+
+                    // Poster image
+                    const posterUrl = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+                    document.getElementById('moviePoster').src = posterUrl;
+
+                    // Movie details
+                    document.getElementById('movieTitle').textContent = data.title;
+                    document.getElementById('movieDescription').textContent = data.overview;
+                    document.getElementById('imdb-rating').textContent = `IMDB Rating: ${data.vote_average}/10`; // Here, we're using TMDB's vote_average as the rating.
+
+                    document.getElementById('movieGenre').textContent = data.genres.map(genre => genre.name).join(', ');
+                    document.getElementById('movieDuration').textContent = `${data.runtime} minutes`;
+                    document.getElementById('movieCountry').textContent = data.production_countries.map(country => country.name).join(', ');
+                    if (data.genres && data.genres[0]) {
+                        const genreId = data.genres[0].id; // Taking the first genre ID for simplicity
+                        fetchSimilarMovies(genreId);
+                    }
+                })
+
+                .catch(err => {
+                    console.error("Error fetching movie details:", err);
+                });
+
+            // Set the iframe source
+            const iframeUrl = `https://vidsrc.to/embed/movie/${movieId}`;
+            document.getElementById('movie-iframe').src = iframeUrl;
+        }
+        function fetchSimilarMovies(genreId) {
+            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c9cbc16ed2cc92ee656d643c52f8c6a1&with_genres=${genreId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const moviesContainer = document.getElementById('similar-movies');
+                    const movieElement = document.createElement('div');
+                    movieElement.className = 'similar-movie-item';
+                    movieElement.innerHTML = `
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                    <p>${movie.title}</p>
+                `;
+                    moviesContainer.appendChild(movieElement);
+
+                })
+                .catch(err => {
+                    console.error("Error fetching similar movies:", err);
+                });
+        }
+        function fetchTrendingSectionMovies() {
+            fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${TMDB_API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    const moviesContainer = document.getElementById('trending-movies-container');
+
+                    // Clear previous movies if any
+                    moviesContainer.innerHTML = '';
+
+                    // Take the first 18 movies only
+                    const limitedMovies = data.results.slice(0, 18);
+
+                    limitedMovies.forEach(movie => {
+                        // Only display movies with a poster image
+                        if (movie.poster_path) {
+                            let movieElement = `
+                    <a href="movie.html?id=${movie.id}">
+                        <div class="movie-card" style="margin: 10px; width: 200px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); background-color: #131312;">
+                            <img src="https://image.tmdb.org/t/p/w200${movie.poster_path}" alt="${movie.title}" title="${movie.title}" style="max-width: 100%; display: block;">
+                            <div class="trending-movie-title" style="padding: 10px; font-size: 14px; height: 100px; color: white; font-family: Arial, Helvetica, sans-serif; text-decoration: none;">${movie.title}</div>
+                        </div>
+                    </a>`;
+                            moviesContainer.innerHTML += movieElement;
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Failed to fetch trending section movies', error);
+                });
+        }
+
+        fetchTrendingSectionMovies();
+        function fetchTVShows(type, page = 1) {
+            fetch(`https://vidsrc.to/vapi/tv/${type}/${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tvShowsContainer = document.getElementById('tv-shows');
+
+                    // Clear previous shows if any
+                    tvShowsContainer.innerHTML = '';
+
+                    // Limit to the first 18 shows only for example
+                    const limitedTVShows = data.slice(0, 18);
+
+                    limitedTVShows.forEach(show => {
+                        if (show.poster) {
+                            const rating = show.rating ? parseFloat(show.rating).toFixed(1) : 'N/A';
+                            const year = show.year || 'N/A';
+
+                            let showElement = `
+                        <a href="tvshow.html?id=${show.imdb_id}">
+                            <div class="tv-show-card">
+                                <img src="${show.poster}" alt="${show.title}" title="${show.title}">
+                                <div class="tv-show-title">${show.title}</div>
+                                <div class="tv-show-details">
+                                    <span style="margin-right: 20px;">⭐ ${rating}</span>${year}
+                                </div>
+                            </div>
+                        </a>`;
+                            tvShowsContainer.innerHTML += showElement;
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Failed to fetch TV shows', error);
+                });
+        }
+
+        // Fetch the new release TV shows by default
+        fetchTVShows('new');
+
+
+    </script>
+
+</body>
+
+</html>

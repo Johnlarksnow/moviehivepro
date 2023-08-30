@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Streaming</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #131312;
+            position: relative;
+            /* Add this line */
+        }
+
+        .dropdown-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .dropdown {
+            display: none;
+            flex-direction: row;
+            /* Make child items go in a row */
+            align-items: center;
+            /* Center items vertically */
+            justify-content: space-between;
+            /* Separate items */
+            width: 100%;
+            /* Take full width */
+            padding: 10px;
+            background-color: #131312;
+        }
+
+        .search-box {
+            flex: 1;
+            /* Allow search box to take the most space */
+            margin-right: 10px;
+            /* Space between search box and button */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img style="height: 54px; width: 100px;" src="images/movies.png">
+        </div>
+
+        <div class="mobile-menu-icon" onclick="toggleDropdown()">
+            <span>&#9776;</span>
+        </div>
+    </nav>
+
+    <div class="dropdown-container">
+        <div class="dropdown" id="searchDropdown">
+            <input type="text" id="search-input" style="color: white;" class="search-box"
+                placeholder="Enter keywords...">
+            <button class="searchButton" onclick="searchMovies()">Search</button>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('searchDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
