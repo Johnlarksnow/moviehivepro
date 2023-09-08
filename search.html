@@ -191,10 +191,12 @@
         <div class="logo">
             <a href="/"><img style="height: 54px; width: 100px;" src="images/movies.png"></a>
         </div>
-        <input type="text" id="search-input" style="color: white;" class="search-box" placeholder="Enter Movies...">
-        <button class="searchButton" onclick="searchMovies()">Search</button>
+        <form id="searchForm">
+            <input type="text" id="search-input" style="color: white;" class="search-box"
+                placeholder="Enter keywords...">
 
-
+        </form>
+        <button class="searchButton" type="submit">Search</button>
 
         <div class="mobile-menu-icon">
             <span>&#9776;</span>
@@ -208,6 +210,11 @@
 
     <script>
 
+
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevents the form from actually submitting
+            searchMovies();
+        });
 
         function searchMovies() {
             const query = document.getElementById('search-input').value.trim();
