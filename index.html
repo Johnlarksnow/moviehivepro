@@ -2,16 +2,11 @@
 <html lang="en">
 
 <head>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
     <meta charset="UTF-8">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FW6R1YK7ED"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-FW6R1YK7ED');
-</script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieHive | Ad Free Movies, TV Shows, More</title>
@@ -428,9 +423,12 @@
         <div class="logo">
             <a href="/"><img style="height: 54px; width: 100px;" src="images/movies.png"></a>
         </div>
-        <input type="text" id="search-input" style="color: white;" class="search-box" placeholder="Enter keywords...">
-        <button class="searchButton" onclick="searchMovies()">Search</button>
-
+        <form id="searchForm">
+            <input type="text" id="search-input" style="color: white;" class="search-box"
+                placeholder="Enter keywords...">
+            
+        </form>
+        <button class="searchButton" type="submit">Search</button>
 
         <div class="mobile-menu-icon">
             <span>&#9776;</span>
@@ -521,6 +519,11 @@
         const TMDB_API_KEY = 'c9cbc16ed2cc92ee656d643c52f8c6a1';
 
 
+
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevents the form from actually submitting
+            searchMovies();
+        });
 
         function searchMovies() {
             const query = document.getElementById('search-input').value.trim();
